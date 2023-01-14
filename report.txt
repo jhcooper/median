@@ -1,0 +1,59 @@
+This project finds the running median of a stream of integers, returning the median in O(nlog(n)) time after every new integer.
+This is accomplished through the use of two priority queues, on a max heap (gt) and one a min heap (lt). The max heap stores 
+all elements less than the current median in ascending order. It will also contain the first element inputted. The min heap 
+stores all elements greater than the median as negative numbers as to keep it in ascending order, with the smallest value 
+on top of the queue. After every new integer input, the queues are rebalanced so that the difference in their size is 
+no more than one. Thus, the median always lies at the top of whichever queue has more elements, or at the top of 
+both stacks if they have the same number of elements.
+
+
+
+median.cc contains four helper functions and a main function.
+
+Median- returns the comparable median for use in determining
+	where new integers are stored. Either returns the top
+	value of lt or gt stack, depending on which stack has
+	more elements.
+
+balanceHeap- balances two queues so that their sizes differ
+	     by no more than one.
+
+insert- determines if a newly inputted integer is pushed in
+	lt or gt. If it is greater than the median, it is 
+	pushed to gt. Otherwise, it is pushed to lt.
+	Calls balanceHeap to make sure the sizes of each 
+	queue after the new element differ no more than 1.
+
+printMed- prints either the top of the lt stack, the top of
+	  the gt stack, or both. If lt has more elements,
+	  lt.top() is printed. If gt has more elements,
+	  gt,top() is printed. If they have the same number
+	  of elements, both are printed.
+
+main- prompts the user to enter 'p' to push or 'q' to quit,
+      then promts the user for an integer to push if 'p'
+      is selected. This process is repeated until the user
+      chooses to quit. Each time an integer is entered,
+      a call t insert is made to insert it in to the proper
+      stack and balance the stacks, and then a call to
+      printMed is made to print the appropriate median.
+
+
+
+Makefile contains three commands: make, make run, and make clean
+
+make- compiles median.cc to the exacuteable median
+
+make run- runs median with ./median
+
+make clean- removes the exacuteable median from the directory
+	    with rm -r median
+
+
+
+TIME COMPLEXITY REPORT:
+
+median.cc itself executes in constant time, or O(1). There is no looping in any of the helper functions.
+However, the use of priority queues, which take O(nlog(n)) time to insert values, makes the overall
+runtime O(nlog(n)).
+
